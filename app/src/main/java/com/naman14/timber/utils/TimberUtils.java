@@ -394,7 +394,6 @@ public class TimberUtils {
                         continue;
                     }
                     String sAddr = addr.getHostAddress();
-                    //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
                     boolean isIPv4 = sAddr.indexOf(':')<0;
 
                     if (useIPv4 && isIPv4) {
