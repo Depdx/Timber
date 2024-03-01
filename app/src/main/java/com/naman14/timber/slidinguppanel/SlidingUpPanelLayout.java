@@ -815,7 +815,9 @@ public class SlidingUpPanelLayout extends ViewGroup {
         } else {
             if (mSlideState == SlideState.HIDDEN || mSlideState == SlideState.COLLAPSED)
                 return false;
-            return collapsePanel(mSlideableView, 0);
+            if (mSlideableView == null || mSlideState == SlideState.EXPANDED) return false;
+            mSlideableView.setVisibility(View.VISIBLE);
+            return mFirstLayout || smoothSlideTo(0.0f, 0);
         }
     }
 

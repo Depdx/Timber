@@ -318,7 +318,7 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
     }
 
     public void setPanelSlideListeners(SlidingUpPanelLayout panelLayout) {
-        panelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+        panelLayout.panelSlideListener = new SlidingUpPanelLayout.PanelSlideListener() {
 
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -350,7 +350,7 @@ public class BaseActivity extends ATEActivity implements ServiceConnection, Musi
             public void onPanelHidden(View panel) {
 
             }
-        });
+        };
     }
 
     private final static class PlaybackStatus extends BroadcastReceiver {
