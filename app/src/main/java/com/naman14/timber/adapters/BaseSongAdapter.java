@@ -14,6 +14,7 @@ import com.naman14.timber.cast.TimberCastHelper;
 import com.naman14.timber.models.Song;
 import com.naman14.timber.utils.NavigationUtils;
 import com.naman14.timber.utils.TimberUtils;
+import com.naman14.timber.adapters.DialogDeletable;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by naman on 7/12/17.
  */
 
-public class BaseSongAdapter<V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
+public class BaseSongAdapter<V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> implements DialogDeletable {
 
     @Override
     public V onCreateViewHolder(ViewGroup parent, int viewType) {

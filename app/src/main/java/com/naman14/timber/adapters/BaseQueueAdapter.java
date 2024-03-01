@@ -36,10 +36,10 @@ import com.naman14.timber.utils.TimberUtils;
 import com.naman14.timber.widgets.MusicVisualizer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
+import com.naman14.timber.adapters.DialogDeletable;
 import java.util.List;
 
-public class BaseQueueAdapter extends RecyclerView.Adapter<BaseQueueAdapter.ItemHolder> {
+public class BaseQueueAdapter extends RecyclerView.Adapter<BaseQueueAdapter.ItemHolder> implements DialogDeletable {
 
     public static int currentlyPlayingPosition;
     private List<Song> arraylist;
