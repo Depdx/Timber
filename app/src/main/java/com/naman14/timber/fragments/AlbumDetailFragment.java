@@ -184,8 +184,8 @@ public class AlbumDetailFragment extends Fragment {
                         loadFailed = true;
                         MaterialDrawableBuilder builder = MaterialDrawableBuilder.with(context)
                                 .setIcon(MaterialDrawableBuilder.IconValue.SHUFFLE)
-                                .setColor(TimberUtils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
-                        ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, Helpers.getATEKey(context)));
+                                .setColor(TimberUtils.getBlackWhiteColor(Config.accentColor(context, getATEKey(context))));
+                        ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, getATEKey(context)));
                         fab.setImageDrawable(builder.build());
                     }
 
@@ -200,14 +200,14 @@ public class AlbumDetailFragment extends Fragment {
                                                                                   primaryColor = swatch.getRgb();
                                                                                   collapsingToolbarLayout.setContentScrimColor(primaryColor);
                                                                                   if (getActivity() != null)
-                                                                                      ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
+                                                                                      ATEUtils.setStatusBarColor(getActivity(), getATEKey(getActivity()), primaryColor);
                                                                               } else {
                                                                                   Palette.Swatch swatchMuted = palette.getMutedSwatch();
                                                                                   if (swatchMuted != null) {
                                                                                       primaryColor = swatchMuted.getRgb();
                                                                                       collapsingToolbarLayout.setContentScrimColor(primaryColor);
                                                                                       if (getActivity() != null)
-                                                                                          ATEUtils.setStatusBarColor(getActivity(), Helpers.getATEKey(getActivity()), primaryColor);
+                                                                                          ATEUtils.setStatusBarColor(getActivity(), getATEKey(getActivity()), primaryColor);
                                                                                   }
                                                                               }
 
@@ -221,8 +221,8 @@ public class AlbumDetailFragment extends Fragment {
                                                                                       fab.setImageDrawable(builder.build());
                                                                                   } else {
                                                                                       if (context != null) {
-                                                                                          ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, Helpers.getATEKey(context)));
-                                                                                          builder.setColor(TimberUtils.getBlackWhiteColor(Config.accentColor(context, Helpers.getATEKey(context))));
+                                                                                          ATEUtils.setFabBackgroundTint(fab, Config.accentColor(context, getATEKey(context)));
+                                                                                          builder.setColor(TimberUtils.getBlackWhiteColor(Config.accentColor(context, getATEKey(context))));
                                                                                           fab.setImageDrawable(builder.build());
                                                                                       }
                                                                                   }
@@ -345,7 +345,7 @@ public class AlbumDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String ateKey = Helpers.getATEKey(getActivity());
+        String ateKey = getATEKey(getActivity());
         toolbar.setBackgroundColor(Color.TRANSPARENT);
         if (primaryColor != -1 && getActivity() != null) {
             collapsingToolbarLayout.setContentScrimColor(primaryColor);
@@ -366,5 +366,10 @@ public class AlbumDetailFragment extends Fragment {
             FabAnimationUtils.scaleOut(fab, 0, null);
         }
 
+    }
+
+    private String getATEKey(Context context){
+
+        return Helpers.getATEKey(context);
     }
 }
