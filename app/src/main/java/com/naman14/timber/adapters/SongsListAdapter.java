@@ -79,47 +79,53 @@ public class SongsListAdapter extends BaseSongAdapter<SongsListAdapter.ItemHolde
     }
 
     @Override
-    public void onBindViewHolder(ItemHolder itemHolder, int i) {
-        Song localItem = arraylist.get(i);
+    public void onBindViewHolder(ItemHolder itemHolder, int position) {
+        Song localItem = arraylist.get(position);
 
-        itemHolder.title.setText(localItem.title);
-        itemHolder.artist.setText(localItem.artistName);
+        updateUI(itemHolder, localItem, position);
+        setOnPopupMenuListener(itemHolder, position);
+    }
 
-        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(localItem.albumId).toString(),
-                itemHolder.albumArt, new DisplayImageOptions.Builder().cacheInMemory(true)
+    private void updateUI(ItemHolder holder, Song song, int position) {
+        holder.title.setText(song.title);
+        holder.artist.setText(song.artistName);
+        loadImage(holder.albumArt, song.albumId);
+
+        updateTextColor(holder, song);
+        updateVisualizer(holder, song);
+        applyAnimationIfNeeded(holder.itemView, position);
+    }
+
+    private void loadImage(ImageView imageView, long albumId) {
+        ImageLoader.getInstance().displayImage(TimberUtils.getAlbumArtUri(albumId).toString(),
+                imageView, new DisplayImageOptions.Builder().cacheInMemory(true)
                         .showImageOnLoading(R.drawable.ic_empty_music2)
                         .resetViewBeforeLoading(true).build());
+    }
 
-        if (MusicPlayer.getCurrentAudioId() == localItem.id) {
-            itemHolder.title.setTextColor(Config.accentColor(mContext, ateKey));
-            if (MusicPlayer.isPlaying()) {
-                itemHolder.visualizer.setColor(Config.accentColor(mContext, ateKey));
-                itemHolder.visualizer.setVisibility(View.VISIBLE);
-            } else {
-                itemHolder.visualizer.setVisibility(View.GONE);
-            }
+    private void updateTextColor(ItemHolder holder, Song song) {
+        if (MusicPlayer.getCurrentAudioId() == song.id) {
+            holder.title.setTextColor(Config.accentColor(mContext, ateKey));
         } else {
-            itemHolder.visualizer.setVisibility(View.GONE);
-            if (isPlaylist) {
-                itemHolder.title.setTextColor(Color.WHITE);
-            } else {
-                itemHolder.title.setTextColor(Config.textColorPrimary(mContext, ateKey));
-            }
+            holder.title.setTextColor(isPlaylist ? Color.WHITE : Config.textColorPrimary(mContext, ateKey));
         }
+    }
 
-
-        if (animate && isPlaylist) {
-            if (TimberUtils.isLollipop())
-                setAnimation(itemHolder.itemView, i);
-            else {
-                if (i > 10)
-                    setAnimation(itemHolder.itemView, i);
-            }
+    private void updateVisualizer(ItemHolder holder, Song song) {
+        if (MusicPlayer.getCurrentAudioId() == song.id && MusicPlayer.isPlaying()) {
+            holder.visualizer.setColor(Config.accentColor(mContext, ateKey));
+            holder.visualizer.setVisibility(View.VISIBLE);
+        } else {
+            holder.visualizer.setVisibility(View.GONE);
         }
+    }
 
+    private void applyAnimationIfNeeded(View view, int position) {
+        if (!animate || !isPlaylist) return;
 
-        setOnPopupMenuListener(itemHolder, i);
-
+        if (TimberUtils.isLollipop() || position > 10) {
+            setAnimation(view, position);
+        }
     }
 
     public void setPlaylistId(long playlistId) {
